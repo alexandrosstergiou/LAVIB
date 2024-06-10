@@ -60,8 +60,8 @@ class LAVIB(Dataset):
             df = pd.read_csv(os.path.join(self.data_root,'annotations',f'test{addition}.csv'))
             self.split = 'test'
         
-        videos = [os.path.join(self.data_root,'segments_downsampled',f"{int(row['name'])}_shot{int(row['shot'])}_{int(row['tmp_crop'])}_{int(row['vrt_crop'])}_{int(row['hrz_crop'])}") for _,row in df.iterrows()]
-           
+        videos = [os.path.join(self.data_root,'segments',f"{int(row['name'])}_shot{int(row['shot'])}_{int(row['tmp_crop'])}_{int(row['vrt_crop'])}_{int(row['hrz_crop'])}") for _,row in df.iterrows()]
+        
         videos = sorted(videos)
         self.vidslist = []
         for vid in videos:
@@ -85,9 +85,9 @@ class LAVIB(Dataset):
         video_frames = [video_fr[i] for i in range(min(vidspath[1]),max(vidspath[1]),2)]
         
         video_frames = torch.stack(video_frames).float().permute(0, 3, 1, 2)
-        #if video_frames.shape[-1] > 512:
-        #    if self.split != 'train':
-        #        video_frames = v2.Resize(size=512,antialias=True)(video_frames)
+        if video_frames.shape[-1] > 720:
+            if self.split != 'train':
+                video_frames = v2.Resize(size=720,antialias=True)(video_frames)
         
         if self.split == 'train':
             video_frames = self.crop(video_frames, 256, 256)
@@ -100,7 +100,7 @@ class LAVIB(Dataset):
         gt = images[len(images)//2]
         images = images[:len(images)//2] + images[len(images)//2+1:]
         
-        return images, gt, vidspath[0], vidspath[1]
+        return images, gt
 
     def __len__(self):
         return len(self.vidslist)

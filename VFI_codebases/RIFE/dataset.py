@@ -8,8 +8,13 @@ import numpy as np
 import random
 from torch.utils.data import DataLoader, Dataset
 
+from torchvision.transforms import v2
+
 cv2.setNumThreads(1)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+import warnings 
+
+warnings.filterwarnings("ignore")
 
 
 class LAVIBDataset(Dataset):
@@ -55,13 +60,13 @@ class LAVIBDataset(Dataset):
     
     def read_data(self,split):
         df = pd.read_csv(os.path.join(self.data_root,'annotations',split+f'{self.addition}.csv'))
-        videos = [os.path.join(self.data_root,'segments',f"{int(row['name'])}_shot{int(row['shot'])}_{int(row['tmp_crop'])}_{int(row['vrt_crop'])}_{int(row['hrz_crop'])}",f"frames") for _,row in df.iterrows()]
+        videos = [os.path.join(self.data_root,'segments_downsampled',f"{int(row['name'])}_shot{int(row['shot'])}_{int(row['tmp_crop'])}_{int(row['vrt_crop'])}_{int(row['hrz_crop'])}") for _,row in df.iterrows()]
            
         videos = sorted(videos)
         vidslist = []
         for vid in videos:
-            for i in range(1,61-self.dur,self.dur):
-                vidslist.append([vid,(i,i+self.dur)])
+            for i in range(1,61-(self.dur*2),self.dur*2):
+                vidslist.append([vid,(i,i+self.dur*2)])
         print(f'VideoLoader:: {len(vidslist)} frame tuples for {split} ready to be loaded with {self.dur} frames per tuple')
         
         return vidslist
@@ -70,36 +75,31 @@ class LAVIBDataset(Dataset):
         self.meta_data = self.read_data(self.dataset_name)
         
     def crop(self, img0, gt, img1, h, w):
-        ih, iw, _ = img0.shape
+        _, ih, iw = img0.shape
         x = np.random.randint(0, ih - h + 1)
         y = np.random.randint(0, iw - w + 1)
         img0 = img0[:, x:x+h, y:y+w]
-        img1 = img1[:, x:x+h, y:y+w, :]
+        img1 = img1[:, x:x+h, y:y+w]
         gt = gt[:, x:x+h, y:y+w]
         return img0, gt, img1
 
     def getimg(self, index):
         vidspath = self.meta_data[index]
-        video_frames = [torchvision.io.read_image(f"{vidspath[0]}/frame{i:04d}.jpg").permute(1,2,0) for i in range(min(vidspath[1]),max(vidspath[1]))]
+        video_fr = torchvision.io.read_video(f"{vidspath[0]}/vid.mp4")[0]
+        video_frames = [video_fr[i] for i in range(min(vidspath[1]),max(vidspath[1]),2)]
 
         # Load images
-        video_frames = thwc_to_cthw(torch.stack(video_frames).float()).permute(1, 0, 2, 3)
-        img0 = video_frames[:,0,...]
-        img1 = video_frames[:,2,...]
-        gt = video_frames[:,1,...]
+        video_frames = torch.stack(video_frames).float().permute(0, 3, 1, 2)
+        if video_frames.shape[-1] > 720:
+            if self.dataset_name != 'train':
+                video_frames = v2.Resize(size=720,antialias=True)(video_frames)
+        img0 = video_frames[0,...]
+        img1 = video_frames[2,...]
+        gt = video_frames[1,...]
         timestep = 0.5
+        if self.dataset_name == 'train':
+            img0, gt, img1 = self.crop(img0, gt, img1, self.h, self.w)
         return img0, gt, img1, timestep
-    
-        # RIFEm with Vimeo-Septuplet
-        # imgpaths = [imgpath + '/im1.png', imgpath + '/im2.png', imgpath + '/im3.png', imgpath + '/im4.png', imgpath + '/im5.png', imgpath + '/im6.png', imgpath + '/im7.png']
-        # ind = [0, 1, 2, 3, 4, 5, 6]
-        # random.shuffle(ind)
-        # ind = ind[:3]
-        # ind.sort()
-        # img0 = cv2.imread(imgpaths[ind[0]])
-        # gt = cv2.imread(imgpaths[ind[1]])
-        # img1 = cv2.imread(imgpaths[ind[2]])        
-        # timestep = (ind[1] - ind[0]) * 1.0 / (ind[2] - ind[0] + 1e-6)
             
     def __getitem__(self, index):        
         img0, gt, img1, timestep = self.getimg(index)

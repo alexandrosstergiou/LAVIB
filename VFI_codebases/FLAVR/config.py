@@ -11,7 +11,7 @@ def add_argument_group(name):
 # Dataset
 data_arg = add_argument_group('Dataset')
 data_arg.add_argument('--dataset', type=str, default='lavib')
-data_arg.add_argument('--data_root', type=str, default="/local/stergiouag/LAVIB")
+data_arg.add_argument('--data_root', type=str, default="/edia/SCRATCH/LAVIB")
 
 # Model
 model_choices = ["unet_18", "unet_34"]

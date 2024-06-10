@@ -33,9 +33,7 @@ class LAVIBDataset(Dataset):
         self.h = 256
         self.w = 256
         self.data_root = path
-        self.image_root = os.path.join(self.data_root, 'segments_downsampled')
-        
-        self.dur = 3
+        self.image_root = os.path.join(self.data_root, 'segments')
         
         if set=='main':
             addition=''
@@ -61,7 +59,8 @@ class LAVIBDataset(Dataset):
         
         else:
             addition=''
-            
+        
+        self.dur = 3
 
         if self.dataset_name == 'train':
             df = pd.read_csv(os.path.join(self.data_root,'annotations',f'train{addition}.csv'))
@@ -70,7 +69,8 @@ class LAVIBDataset(Dataset):
             df = pd.read_csv(os.path.join(self.data_root,'annotations',f'test{addition}.csv'))
             self.split = 'test'
         
-        videos = [os.path.join(self.data_root,'segments_downsampled',f"{int(row['name'])}_shot{int(row['shot'])}_{int(row['tmp_crop'])}_{int(row['vrt_crop'])}_{int(row['hrz_crop'])}") for _,row in df.iterrows()]
+        videos = [os.path.join(self.data_root,'segments',f"{int(row['name'])}_shot{int(row['shot'])}_{int(row['tmp_crop'])}_{int(row['vrt_crop'])}_{int(row['hrz_crop'])}") for _,row in df.iterrows()] 
+
            
         videos = sorted(videos)
         self.vidslist = []
@@ -95,9 +95,9 @@ class LAVIBDataset(Dataset):
         video_frames = [video_fr[i] for i in range(min(vidspath[1]),max(vidspath[1]),2)]
         
         video_frames = torch.stack(video_frames).float().permute(0, 3, 1, 2)
-        if video_frames.shape[-1] > 512:
+        if video_frames.shape[-1] > 720:
             if self.split != 'train':
-                video_frames = v2.Resize(size=512,antialias=True)(video_frames)
+                video_frames = v2.Resize(size=720,antialias=True)(video_frames)
         
         if self.split == 'train':
             video_frames = self.crop(video_frames, 256, 256)

@@ -19,6 +19,20 @@ from config import *
 device = torch.device("cuda")
 exp = os.path.abspath('.').split('/')[-1]
 
+
+def calc_psnr(pred, gt, mask=None):
+    '''
+        Here we assume quantized(0-1.) arguments.
+    '''
+    diff = (pred - gt)
+
+    if mask is not None:
+        mse = diff.pow(2).sum() / (3 * mask.sum())
+    else:
+        mse = diff.pow(2).mean() + 1e-8    # mse can (surprisingly!) reach 0, which results in math domain error
+
+    return -10 * math.log10(mse)
+
 def gpu_mem_usage():
     """
     Compute the GPU memory usage for the current device (GB).
@@ -57,6 +71,7 @@ def train(model, local_rank, batch_size, data_path, tset):
     
         with tqdm(total=len(train_data),bar_format=bformat,ascii='░▒█',miniters=1) as pbar:
             for i, imgs in enumerate(train_data):
+                
                 data_time_interval = time.time() - time_stamp
                 time_stamp = time.time()
                 imgs = imgs.to(device, non_blocking=True) / 255.
@@ -152,20 +167,6 @@ def evaluate(model, val_data, nr_eval, local_rank):
             
             
             
-    '''
-    for _, imgs in enumerate(val_data):
-        imgs = imgs.to(device, non_blocking=True) / 255.
-        imgs, gt = imgs[:, 0:6], imgs[:, 6:]
-        with torch.no_grad():
-            pred, _ = model.update(imgs, gt, training=False)
-        for j in range(gt.shape[0]):
-            psnr.append(-10 * math.log10(((gt[j] - pred[j]) * (gt[j] - pred[j])).mean().cpu().item()))
-   
-    psnr = np.array(psnr).mean()
-    if local_rank == 0:
-        print(str(nr_eval), psnr)
-        writer_val.add_scalar('psnr', psnr, nr_eval)
-    '''
         
 if __name__ == "__main__":    
     parser = argparse.ArgumentParser()

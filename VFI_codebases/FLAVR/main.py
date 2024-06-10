@@ -130,6 +130,7 @@ def train(args, epoch):
     
     with tqdm(total=len(train_loader),bar_format=bformat,ascii='░▒█',miniters=1) as pbar:
         for i, (images, gt)  in enumerate(train_loader):
+            
 
             # Build input batch
             images = torch.stack(images , dim=2).cuda()/255.
@@ -185,11 +186,7 @@ def test(args, epoch):
     loss_fn_squeeze = lpips.LPIPS(net='squeeze').cuda()
     
     with tqdm(total=len(test_loader),bar_format=bformat,ascii='░▒█') as pbar:
-        for i, (images, gt, filename, frames) in enumerate(test_loader):
-            
-            target_name = 'outs/'+f'{args.set}/'+filename[0].split('/')[-1]+f'/{min(frames).item()}_{max(frames).item()}'
-            if not os.path.isdir(target_name):
-                os.makedirs(target_name)
+        for i, (images, gt) in enumerate(test_loader):
 
             # Build input batch
             images = torch.stack(images , dim=2).cuda()/255.

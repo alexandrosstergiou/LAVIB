@@ -111,30 +111,25 @@ def train(model, local_rank, root_dir='/media/SCRATCH/LAVIB', s='main'):
                 pred, info = model.update(imgs, gt, learning_rate, training=True) # pass timestep if you are training RIFEm
                 
                 psnr = calc_psnr(gt,pred) 
-                ssim = pytorch_msssim.ms_ssim(pred, gt, data_range=1, size_average=True).item()
+                ssim = pytorch_msssim.ms_ssim(pred.detach(), gt.detach(), data_range=1, size_average=True).item()
                 
                 stats['psnr'].append(psnr)
                 stats['ssim'].append(ssim)
                 
                 time_stamp = time.time()
-                if step % 200 == 1 and local_rank == 0:
+                if step % 10000 == 1 and local_rank != 0:
                     writer.add_scalar('learning_rate', learning_rate, step)
-                    writer.add_scalar('loss/l1', info['loss_l1'], step)
-                    writer.add_scalar('loss/tea', info['loss_tea'], step)
-                    writer.add_scalar('loss/distill', info['loss_distill'], step)
-                if step % 1000 == 1 and local_rank == 0:
+                    writer.add_scalar('loss/l1', info['loss_l1'].detach(), step)
+                    writer.add_scalar('loss/tea', info['loss_tea'].detach(), step)
+                    writer.add_scalar('loss/distill', info['loss_distill'].detach(), step)
+                if step % 20000 == 1 and local_rank != 0:
                     gt = (gt.permute(0, 2, 3, 1).detach().cpu().numpy() * 255).astype('uint8')
                     mask = (torch.cat((info['mask'], info['mask_tea']), 3).permute(0, 2, 3, 1).detach().cpu().numpy() * 255).astype('uint8')
                     pred = (pred.permute(0, 2, 3, 1).detach().cpu().numpy() * 255).astype('uint8')
                     merged_img = (info['merged_tea'].permute(0, 2, 3, 1).detach().cpu().numpy() * 255).astype('uint8')
                     flow0 = info['flow'].permute(0, 2, 3, 1).detach().cpu().numpy()
                     flow1 = info['flow_tea'].permute(0, 2, 3, 1).detach().cpu().numpy()
-                    for i in range(5):
-                        imgs = np.concatenate((merged_img[i], pred[i], gt[i]), 1)[:, :, ::-1]
-                        writer.add_image(str(i) + '/img', imgs, step, dataformats='HWC')
-                        writer.add_image(str(i) + '/flow', np.concatenate((flow2rgb(flow0[i]), flow2rgb(flow1[i])), 1), step, dataformats='HWC')
-                        writer.add_image(str(i) + '/mask', mask[i], step, dataformats='HWC')
-                    writer.flush()
+                    
                 step += 1
                 
                 pbar.set_description(f"EPOCH: {epoch:02d}")
