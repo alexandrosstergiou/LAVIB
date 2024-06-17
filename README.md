@@ -36,7 +36,7 @@ Code and scripts for "LAVIB: Large-scale Video Interpolation Benchmark"
 
 
 # Download
-The dataset and splits are available [here](https://www.dropbox.com/scl/fo/r3w08y0p4x23nzyvpfz0y/AGN1tNHIplDkgdD-5eN81k4?rlkey=k3nvqkraalxifv3547dnz30bn&e=1&st=4l282qji&dl=0)
+The dataset and splits are available [here](https://huggingface.co/datasets/astergiou/LAVIB/tree/main)
 
 ## Introduction
 

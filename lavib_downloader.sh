@@ -1,19 +1,17 @@
 
-lavib00="https://www.dropbox.com/scl/fo/r3w08y0p4x23nzyvpfz0y/ADK0fEcI1RbXiI6imnV8OIU/lavib00?rlkey=k3nvqkraalxifv3547dnz30bn&dl=0"
-lavib01="https://www.dropbox.com/scl/fo/r3w08y0p4x23nzyvpfz0y/APhwa8ph967Rl0S8CFEjKLU/lavib01?rlkey=k3nvqkraalxifv3547dnz30bn&dl=0"
-lavib02="https://www.dropbox.com/scl/fo/r3w08y0p4x23nzyvpfz0y/ADupizBbyxaqxLw_euMSyZU/lavib02?rlkey=k3nvqkraalxifv3547dnz30bn&dl=0"
-lavib03="https://www.dropbox.com/scl/fo/r3w08y0p4x23nzyvpfz0y/ANTLkzwl1JvuJHPFh49IEHs/lavib03?rlkey=k3nvqkraalxifv3547dnz30bn&dl=0"
-lavib04="https://www.dropbox.com/scl/fo/r3w08y0p4x23nzyvpfz0y/AN2TJa8EdzF7kGzOKohStp0/lavib04?rlkey=k3nvqkraalxifv3547dnz30bn&dl=0"
-lavib05="https://www.dropbox.com/scl/fo/r3w08y0p4x23nzyvpfz0y/ADe6eJrgkRQ1yA5KB1JGMZE/lavib05?rlkey=k3nvqkraalxifv3547dnz30bn&dl=0"
-lavib06="https://www.dropbox.com/scl/fo/r3w08y0p4x23nzyvpfz0y/APiFXtw5M7g8BAN2ECglF0A/lavib06?rlkey=k3nvqkraalxifv3547dnz30bn&dl=0"
-lavib07="https://www.dropbox.com/scl/fo/r3w08y0p4x23nzyvpfz0y/AL6jiEtA0N_Xv-B8mUReYdg/lavib07?rlkey=k3nvqkraalxifv3547dnz30bn&dl=0"
-lavib08="https://www.dropbox.com/scl/fo/r3w08y0p4x23nzyvpfz0y/AIpUy0YLo9dekjsE5smts2Q/lavib08?rlkey=k3nvqkraalxifv3547dnz30bn&dl=0"
-lavib09="https://www.dropbox.com/scl/fo/r3w08y0p4x23nzyvpfz0y/AIPODROpq9tNLvUzjcWGaYM/lavib09?rlkey=k3nvqkraalxifv3547dnz30bn&dl=0"
-lavib10="https://www.dropbox.com/scl/fo/r3w08y0p4x23nzyvpfz0y/ALoDTzjYx0Cgg4P3oooFpaE/lavib10?rlkey=k3nvqkraalxifv3547dnz30bn&dl=0"
+lavib00="hhttps://huggingface.co/datasets/astergiou/LAVIB/resolve/main/lavib00"
+lavib01="https://huggingface.co/datasets/astergiou/LAVIB/resolve/main/lavib01"
+lavib02="https://huggingface.co/datasets/astergiou/LAVIB/resolve/main/lavib02"
+lavib03="https://huggingface.co/datasets/astergiou/LAVIB/resolve/main/lavib03"
+lavib04="https://huggingface.co/datasets/astergiou/LAVIB/resolve/main/lavib04"
+lavib05="https://huggingface.co/datasets/astergiou/LAVIB/resolve/main/lavib05"
+lavib06="https://huggingface.co/datasets/astergiou/LAVIB/resolve/main/lavib06"
+lavib07="https://huggingface.co/datasets/astergiou/LAVIB/resolve/main/lavib07"
+lavib08="https://huggingface.co/datasets/astergiou/LAVIB/resolve/main/lavib08"
+lavib09="https://huggingface.co/datasets/astergiou/LAVIB/resolve/main/lavib09"
+lavib10="https://huggingface.co/datasets/astergiou/LAVIB/resolve/main/lavib10"
 
 mkdir -p data
-
-wget -O data/annotations.zip https://www.dropbox.com/scl/fo/r3w08y0p4x23nzyvpfz0y/AFNxpnjd5y8GM2CDFujk95s/annotations?rlkey=k3nvqkraalxifv3547dnz30bn&dl=0
 
 wget -O data/lavib00 $lavib00
 wget -O data/lavib01 $lavib01
