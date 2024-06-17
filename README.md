@@ -9,7 +9,7 @@
 <img src="./imgs/teaser.png" width="700" />
 <br>
 <p align="center">
-<a href="#" target="blank" >[arXiv preprint]</a>
+<a href="https://arxiv.org/abs/2406.09754" target=”_blank” >[arXiv preprint]</a>
 &nbsp;&nbsp;&nbsp;
 <a href="https://alexandrosstergiou.github.io/datasets/LAVIB" target="_blank">[project website]</a>
 &nbsp;&nbsp;&nbsp;
