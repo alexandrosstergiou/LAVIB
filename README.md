@@ -9,14 +9,20 @@
 <img src="./imgs/teaser.png" width="700" />
 <br>
 <p align="center">
-<a href="https://arxiv.org/abs/2406.09754" target=”_blank” >[arXiv preprint]</a>
+Code and scripts for "LAVIB: Large-scale Video Interpolation Benchmark" <br>
+To appear in <a href="https://neurips.cc"> the 38th Annual Conference on Neural Information Processing Systems (NeurIPS) 2024</a><br>
+<a href="https://alexandrosstergiou.github.io/datasets/LAVIB" target="_blank">[project website 🌐]</a>
 &nbsp;&nbsp;&nbsp;
-<a href="https://alexandrosstergiou.github.io/datasets/LAVIB" target="_blank">[project website]</a>
+<a href="https://arxiv.org/abs/2406.09754" target=”_blank” >[arXiv preprint 📃]</a>
+&nbsp;&nbsp;&nbsp;
+<a href="https://arxiv.org/abs/2406.09754" target=”_blank” >[dataset 🤗]</a>
 &nbsp;&nbsp;&nbsp;
 </p>
 </p>
 
-Code and scripts for "LAVIB: Large-scale Video Interpolation Benchmark"
+
+
+
 
 ## Table of contents
 
@@ -36,7 +42,7 @@ Code and scripts for "LAVIB: Large-scale Video Interpolation Benchmark"
 
 
 # Download
-The dataset and splits are available [here](https://huggingface.co/datasets/astergiou/LAVIB/tree/main)
+The dataset and splits are hosted on [huggingface](https://huggingface.co/datasets/astergiou/LAVIB/tree/main)
 
 ## Introduction
 
@@ -189,10 +195,10 @@ OOD challenges weights can be found [here](https://www.dropbox.com/scl/fo/kug85b
 ## Citation
 
 ```bibtex
-@article{stergiou2024lavib,
+@inproceedings{stergiou2024lavib,
       title={LAVIB: Large-scale Video Interpolation Benchmark},
       author={Stergiou, Alexandros},
-      journal={arXiv preprint},
+      booktitle={NeurIPS},
       year={2024}
     }
 ```
