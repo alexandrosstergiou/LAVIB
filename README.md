@@ -10,7 +10,7 @@
 <br>
 <p align="center">
 Code and scripts for "LAVIB: Large-scale Video Interpolation Benchmark" <br>
-To appear in <a href="https://neurips.cc"> the 38th Annual Conference on Neural Information Processing Systems (NeurIPS) 2024</a><br>
+To appear in <a href="https://neurips.cc/Conferences/2024"> the 38th Annual Conference on Neural Information Processing Systems (NeurIPS) 2024</a><br>
 <a href="https://alexandrosstergiou.github.io/datasets/LAVIB" target="_blank">[project website 🌐]</a>
 &nbsp;&nbsp;&nbsp;
 <a href="https://arxiv.org/abs/2406.09754" target=”_blank” >[arXiv preprint 📃]</a>
