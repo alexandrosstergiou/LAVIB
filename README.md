@@ -15,7 +15,7 @@ To appear in <a href="https://neurips.cc/Conferences/2024"> the 38th Annual Conf
 &nbsp;&nbsp;&nbsp;
 <a href="https://arxiv.org/abs/2406.09754" target=”_blank” >[arXiv preprint 📃]</a>
 &nbsp;&nbsp;&nbsp;
-<a href="https://arxiv.org/abs/2406.09754" target=”_blank” >[dataset 🤗]</a>
+<a href="https://huggingface.co/datasets/astergiou/LAVIB/tree/main" target=”_blank” >[dataset 🤗]</a>
 &nbsp;&nbsp;&nbsp;
 </p>
 </p>
