@@ -1,5 +1,5 @@
 
-lavib00="hhttps://huggingface.co/datasets/astergiou/LAVIB/resolve/main/lavib00"
+lavib00="https://huggingface.co/datasets/astergiou/LAVIB/resolve/main/lavib00"
 lavib01="https://huggingface.co/datasets/astergiou/LAVIB/resolve/main/lavib01"
 lavib02="https://huggingface.co/datasets/astergiou/LAVIB/resolve/main/lavib02"
 lavib03="https://huggingface.co/datasets/astergiou/LAVIB/resolve/main/lavib03"
